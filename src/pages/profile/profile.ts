@@ -3,29 +3,29 @@ import {NavController} from 'ionic-angular';
 import {ProfileService} from './../../providers/profile-service';
 
 @Component({
-  templateUrl: './profile.html'
+    templateUrl: './profile.html'
 })
 export class ProfilePage extends OnInit {
 
-  public data: any;
-  public error: any;
+    public data: any;
+    public error: any;
 
-  constructor(public navCtrl: NavController, protected profileService: ProfileService) {
-    super();
-  }
+    constructor(public navCtrl: NavController, protected profileService: ProfileService) {
+        super();
+    }
 
-  ngOnInit() {
-    this.getProfile();
-  }
+    ngOnInit() {
+        this.getProfile();
+    }
 
-  /**
-   *
-   * @returns {Subscription}
-   */
-  protected getProfile() {
-    return this.profileService.getProfile()
-      .then(data => this.data = data)
-      .catch(error => this.error = error);
-  }
+    /**
+     *
+     * @returns {Promise<{}>}
+     */
+    protected getProfile() {
+        return this.profileService.getProfile()
+            .then(data => this.data = data)
+            .catch(error => this.error = error);
+    }
 
 }

@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import {AppConfig} from './../app/app.config';
-import {Storage} from '@ionic/storage';
+import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class ProfileService {
     private profile: any;
 
-    constructor(private http: Http, private appConfig: AppConfig, private storage: Storage) {
+    constructor(private http: Http, private appConfig: AppConfig) {
     }
 
     /**
@@ -19,25 +19,21 @@ export class ProfileService {
             return Promise.resolve(this.profile);
         }
 
-        return new Promise((resolve, reject) =>
-            this.http.get(this.appConfig.getApiUrl())
-                .subscribe(
-                    data => {
-                        this.profile = ProfileService.mapData(data);
-                        return resolve(this.profile);
-                    },
-                    error => reject(error)
-                )
-        );
+        //noinspection TypeScriptUnresolvedFunction
+        return this.http
+            .get(`${this.appConfig.getApiUrl()}`)
+            .toPromise()
+            .then(ProfileService.mapData)
+            .then(profile => this.profile = profile);
     }
 
     /**
      *
-     * @param res
+     * @param response
      * @returns {{}}
      */
-    private static mapData(res) {
-        let body = JSON.parse(res['_body'] || '');
+    private static mapData(response) {
+        let body = JSON.parse(response['_body'] || '');
         return body['results'] || {};
     }
 

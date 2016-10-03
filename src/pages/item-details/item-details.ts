@@ -1,16 +1,16 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
-import { NavController, NavParams } from 'ionic-angular';
+import {NavController, NavParams} from 'ionic-angular';
 
 
 @Component({
-  templateUrl: 'item-details.html'
+    templateUrl: 'item-details.html'
 })
 export class ItemDetailsPage {
-  selectedItem: any;
+    selectedItem: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    // If we navigated to this page, we will have an item available as a nav param
-    this.selectedItem = navParams.get('item');
-  }
+    constructor(public navCtrl: NavController, public navParams: NavParams) {
+        // If we navigated to this page, we will have an item available as a nav param
+        this.selectedItem = navParams.get('item');
+    }
 }
